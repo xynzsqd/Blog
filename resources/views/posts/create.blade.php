@@ -17,7 +17,7 @@
         </div>
         <div>
             <label for="content">Content</label>
-            <input name="content" type="text" id="content">
+            <textarea name="content" type="text" id="content"></textarea>
         </div>
         <button type="submit">Publish</button>
     </form>
