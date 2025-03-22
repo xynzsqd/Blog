@@ -8,10 +8,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::prefix('posts')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('posts.index');
-
     Route::middleware('auth')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->name('posts.create');
         Route::post('/', [PostController::class, 'store'])->name('posts.store');
     });
+
+    Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/{post}', [PostController::class, 'show'])->name('posts.show');
+
 });

@@ -17,7 +17,7 @@
             @foreach ($posts as $post)
                 <li>
                     <span>author: {{ $post->user->name }}</span>
-                    <h3>{{ $post->title }}</h3>
+                    <h3><a href={{route('posts.show', $post->id)}}>{{ $post->title }}</a></h3>
                     <p>{{ $post->content }}</p>
                 </li>
             @endforeach

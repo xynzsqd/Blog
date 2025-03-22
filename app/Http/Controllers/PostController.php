@@ -16,6 +16,12 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function show(Post $post): view
+    {
+        $post->load('user');
+        return view('posts.show', compact('post'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
