@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 {{-- page title --}}
-@section('title', '{{ $post->title }}')
+@section('title', $post->title)
 
 @section('main')
     <div>
