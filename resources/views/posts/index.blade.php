@@ -17,8 +17,13 @@
             @foreach ($posts as $post)
                 <li>
                     <span>author: {{ $post->user->name }}</span>
-                    <h3><a href={{route('posts.show', $post->id)}}>{{ $post->title }}</a></h3>
+                    <h3><a href={{ route('posts.show', $post->id) }}>{{ $post->title }}</a></h3>
                     <p>{{ $post->content }}</p>
+                    <form method="POST" action="{{ route('posts.delete', $post->id) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit">delete</button>
+                    </form>
                 </li>
             @endforeach
         </ol>

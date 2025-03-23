@@ -13,6 +13,7 @@ Route::prefix('posts')->group(function () {
         Route::post('/', [PostController::class, 'store'])->name('posts.store');
         Route::get('/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
         Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
+        Route::delete('/{post}', [PostController::class, 'delete'])->name('posts.delete');
     });
 
     Route::get('/', [PostController::class, 'index'])->name('posts.index');

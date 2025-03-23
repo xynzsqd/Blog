@@ -16,31 +16,25 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function create(): View
+    {
+        return view('posts.create');
+    }
+
     public function show(Post $post): View
     {
         $post->load('user');
         return view('posts.show', compact('post'));
     }
 
-    public function edit(Post $post): View {
-        if ($post->user->id !== auth()->id())
-        {
+    public function edit(Post $post): View
+    {
+        if ($post->user->id !== auth()->id()) {
             return abort(403);
         }
 
         return view('posts.edit', compact('post'));
     }
-
-    public function update(Request $request, Post $post) {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:100'],
-            'content' => ['required', 'string', 'max:10000'],
-        ]);
-
-        $post->update($data);
-        return redirect()->route('posts.index');
-    }
-
 
     public function store(Request $request): RedirectResponse
     {
@@ -51,11 +45,23 @@ class PostController extends Controller
         $data['user_id'] = auth()->id();
 
         Post::query()->create($data);
-        return redirect()->route('home');
+        return redirect()->route('posts.index');
     }
 
-    public function create(): View
+    public function update(Request $request, Post $post): RedirectResponse
     {
-        return view('posts.create');
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:100'],
+            'content' => ['required', 'string', 'max:10000'],
+        ]);
+
+        $post->update($data);
+        return redirect()->route('posts.index');
+    }
+
+    public function delete(Post $post): RedirectResponse
+    {
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }
