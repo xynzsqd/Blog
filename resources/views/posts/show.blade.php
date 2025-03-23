@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Post</title>
-</head>
+{{-- page title --}}
+@section('title', '{{ $post->title }}')
 
-<body>
+@section('main')
     <span>author: {{ $post->user->name }}</span>
     <h3>{{ $post->title }}</h3>
     <p>{{ $post->content }}</p>
-</body>
-
-</html>
+@endsection

@@ -1,38 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
+{{-- page title --}}
+@section('title', 'Login')
 
-<body>
-    <h2>Login</h2>
-    <form method="POST" action="{{ route('login.store') }}">
-        @csrf
-        {{-- email --}}
-        <div>
-            @if ($errors->any())
-                <div style="color: red;">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <label for="email">email</label>
-            <input name="email" type="email" id="email">
-        </div>
-        {{-- password --}}
-        <div>
-            <label for="password">password</label>
-            <input name="password" type="password" id="password">
-        </div>
-        <button type="submit">Login</button>
-    </form>
-</body>
+@section('main')
+<h2>Login</h2>
+        <form method="POST" action="{{ route('login.store') }}">
+            @csrf
+            {{-- email --}}
+            <div>
+                @if ($errors->any())
+                    <div style="color: red;">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <label for="email">email</label>
+                <input name="email" type="email" id="email">
+            </div>
+            {{-- password --}}
+            <div>
+                <label for="password">password</label>
+                <input name="password" type="password" id="password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+@endsection
 
-</html>

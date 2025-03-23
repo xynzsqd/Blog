@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>publish post</title>
-</head>
-<body>
+@extends('layouts.app')
+
+{{-- page title --}}
+@section('title', 'Create')
+
+@section('main')
     <h2>Publish new post</h2>
 
-    <form method="POST" action="{{route('posts.store')}}">
+    <form method="POST" action="{{ route('posts.store') }}">
         @csrf
         <div>
             <label for="title">Title</label>
@@ -21,5 +18,4 @@
         </div>
         <button type="submit">Publish</button>
     </form>
-</body>
-</html>
+@endsection

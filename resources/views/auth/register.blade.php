@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
-</head>
-<body>
+@extends('layouts.app')
+
+{{-- page title --}}
+@section('title', 'Register')
+
+@section('main')
     <h2>Sign up</h2>
-    <form method="POST" action="{{route('register.store')}}">
+    <form method="POST" action="{{ route('register.store') }}">
         @csrf
         {{-- email --}}
         <div>
@@ -31,5 +28,4 @@
         </div>
         <button type="submit">Register</button>
     </form>
-</body>
-</html>
+@endsection
