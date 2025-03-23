@@ -16,11 +16,31 @@ class PostController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    public function show(Post $post): view
+    public function show(Post $post): View
     {
         $post->load('user');
         return view('posts.show', compact('post'));
     }
+
+    public function edit(Post $post): View {
+        if ($post->user->id !== auth()->id())
+        {
+            return abort(403);
+        }
+
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, Post $post) {
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:100'],
+            'content' => ['required', 'string', 'max:10000'],
+        ]);
+
+        $post->update($data);
+        return redirect()->route('posts.index');
+    }
+
 
     public function store(Request $request): RedirectResponse
     {

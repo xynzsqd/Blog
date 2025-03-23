@@ -11,6 +11,8 @@ Route::prefix('posts')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->name('posts.create');
         Route::post('/', [PostController::class, 'store'])->name('posts.store');
+        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+        Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
     });
 
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
