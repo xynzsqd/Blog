@@ -25,9 +25,11 @@
             </div>
         @endif
         <ul>
-            <li>
-                comment
-            </li>
+            @foreach ($comments as $comment)
+                <li>
+                    {{$comment->body}}
+                </li>
+            @endforeach
         </ul>
     </div>
 
