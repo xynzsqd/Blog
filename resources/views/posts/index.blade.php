@@ -15,11 +15,13 @@
                     <span>author: {{ $post->user->name }}</span>
                     <h3><a href={{ route('posts.show', $post->id) }}>{{ $post->title }}</a></h3>
                     <p>{{ $post->content }}</p>
-                    <form method="POST" action="{{ route('posts.delete', $post->id) }}">
-                        @csrf
-                        @method('delete')
-                        <button type="submit">delete</button>
-                    </form>
+                    @if ($post->user->id === auth()->id())
+                        <form method="POST" action="{{ route('posts.delete', $post->id) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit">delete</button>
+                        </form>
+                    @endif
                 </li>
             @endforeach
         </ol>
