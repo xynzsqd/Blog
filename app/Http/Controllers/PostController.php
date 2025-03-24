@@ -41,10 +41,12 @@ class PostController extends Controller
             'title' => ['required', 'string', 'max:100'],
             'content' => ['required', 'string', 'max:10000'],
         ]);
-        $data['user_id'] = auth()->id();
 
-        Post::query()->create($data);
-        return redirect()->route('posts.index');
+        $data['user_id'] = auth()->id();
+        $data['slug'] = Post::generateUniqueSlug($data['title']);
+        $post = Post::query()->create($data);
+
+        return redirect()->route('posts.show', $post->slug);
     }
 
     public function update(Request $request, Post $post): RedirectResponse
@@ -54,13 +56,15 @@ class PostController extends Controller
             'content' => ['required', 'string', 'max:10000'],
         ]);
 
+        $data['slug'] = Post::generateUniqueSlug($data['title']);
         $post->update($data);
-        return redirect()->route('posts.index');
+
+        return redirect()->route('posts.show', $post->slug);
     }
 
     public function delete(Post $post): RedirectResponse
     {
         $post->delete();
-        return redirect()->route('posts.index');
+        return back();
     }
 }
