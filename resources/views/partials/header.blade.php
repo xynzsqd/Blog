@@ -6,7 +6,7 @@
             </li>
             @auth
             <li>
-                <a href="{{ route('profiles.show', auth()->id()) }}">My profile</a>
+                <a href="{{ route('profile.show', auth()->id()) }}">My profile</a>
             </li>
             @endauth
             <li>

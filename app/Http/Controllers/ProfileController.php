@@ -13,4 +13,10 @@ class ProfileController extends Controller
         $user->load('posts');
         return view('profile.show', compact('user'));
     }
+
+    public function edit(): View
+    {
+        $user = auth()->user();
+        return view('profile.edit', compact('user'));
+    }
 }

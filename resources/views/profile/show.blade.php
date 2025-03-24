@@ -4,6 +4,9 @@
 
 @section('main')
     <h2>{{ $user->name }}</h2>
+    @if ($user->id === auth()->id())
+    <a href="{{route('profile.edit')}}">Edit profile</a>
+    @endif
     <div>
         <h4>posts:</h4>
         <ol>
@@ -18,6 +21,7 @@
                             @method('delete')
                             <button type="submit">delete</button>
                         </form>
+                        <a href="{{route('posts.edit', $post->id)}}">Edit</a>
                     @endif
                 </li>
             @endforeach

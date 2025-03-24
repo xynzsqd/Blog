@@ -12,7 +12,7 @@
         <ol>
             @foreach ($posts as $post)
                 <li>
-                    <a href="{{route('profiles.show', $post->user->id)}}">author: {{ $post->user->name }}</a>
+                    <a href="{{route('profile.show', $post->user->id)}}">author: {{ $post->user->name }}</a>
                     <h3><a href={{ route('posts.show', $post->id) }}>{{ $post->title }}</a></h3>
                     <p>{{ $post->content }}</p>
                 </li>

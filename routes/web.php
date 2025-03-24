@@ -13,7 +13,7 @@ Route::prefix('posts')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->name('posts.create');
         Route::post('/', [PostController::class, 'store'])->name('posts.store');
-        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+        Route::get('/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
         Route::put('/{post}', [PostController::class, 'update'])->name('posts.update');
         Route::delete('/{post}', [PostController::class, 'delete'])->name('posts.delete');
 
@@ -25,5 +25,9 @@ Route::prefix('posts')->group(function () {
 });
 
 Route::prefix('profile')->group(function () {
-    Route::get('/{user}', [ProfileController::class, 'show'])->name('profiles.show');
+    Route::middleware('auth')->group(function () {
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    });
+
+    Route::get('/{user}', [ProfileController::class, 'show'])->name('profile.show');
 });
