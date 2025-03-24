@@ -12,16 +12,9 @@
         <ol>
             @foreach ($posts as $post)
                 <li>
-                    <span>author: {{ $post->user->name }}</span>
+                    <a href="{{route('profiles.show', $post->user->id)}}">author: {{ $post->user->name }}</a>
                     <h3><a href={{ route('posts.show', $post->id) }}>{{ $post->title }}</a></h3>
                     <p>{{ $post->content }}</p>
-                    @if ($post->user->id === auth()->id())
-                        <form method="POST" action="{{ route('posts.delete', $post->id) }}">
-                            @csrf
-                            @method('delete')
-                            <button type="submit">delete</button>
-                        </form>
-                    @endif
                 </li>
             @endforeach
         </ol>

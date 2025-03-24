@@ -4,6 +4,11 @@
             <li>
                 <a href="{{ route('home') }}">Home</a>
             </li>
+            @auth
+            <li>
+                <a href="{{ route('profiles.show', auth()->id()) }}">My profile</a>
+            </li>
+            @endauth
             <li>
                 <a href="{{ route('posts.index') }}">Posts</a>
             </li>

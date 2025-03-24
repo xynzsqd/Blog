@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,4 +22,8 @@ Route::prefix('posts')->group(function () {
 
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
     Route::get('/{post}', [PostController::class, 'show'])->name('posts.show');
+});
+
+Route::prefix('profile')->group(function () {
+    Route::get('/{user}', [ProfileController::class, 'show'])->name('profiles.show');
 });
