@@ -5,6 +5,16 @@
 
 @section('main')
     <h2>Sign up</h2>
+
+    @if ($errors->any())
+        <div style="color: red;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
         {{-- email --}}
