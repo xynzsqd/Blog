@@ -23,4 +23,14 @@ class CommentController extends Controller
 
         return redirect()->route('posts.show', $post->id);
     }
+
+    public function delete(Post $post, Comment $comment): RedirectResponse
+    {
+        if ($comment->user_id !== auth()->id()) {
+            return abort(403);
+        }
+
+        $comment->delete();
+        return redirect()->back();
+    }
 }

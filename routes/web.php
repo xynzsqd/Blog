@@ -18,6 +18,7 @@ Route::prefix('posts')->group(function () {
         Route::delete('/{post}', [PostController::class, 'delete'])->name('posts.delete');
 
         Route::post('/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+        Route::delete('/{post}/comments/{comment}', [CommentController::class, 'delete'])->name('comments.delete');
     });
 
     Route::get('/', [PostController::class, 'index'])->name('posts.index');

@@ -27,7 +27,14 @@
         <ul>
             @foreach ($comments as $comment)
                 <li>
-                    {{$comment->body}}
+                    <p>{{ $comment->body }}</p>
+                    @if ($comment->user_id === auth()->id())
+                        <form method="POST" action="{{ route('comments.delete', [$post->id, $comment->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">delete</button>
+                        </form>
+                    @endif
                 </li>
             @endforeach
         </ul>
