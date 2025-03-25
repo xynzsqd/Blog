@@ -22,6 +22,7 @@ Route::prefix('posts')->group(function () {
     });
 
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/search', [PostController::class, 'search'])->name('posts.search');
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('posts.show');
 });
 

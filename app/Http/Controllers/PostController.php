@@ -62,6 +62,20 @@ class PostController extends Controller
         return redirect()->route('posts.show', $post->slug);
     }
 
+    public function search(Request $request): View
+    {
+        $query = $request->input('query');
+        if (empty($query)) {
+            $posts = Post::query()->with('user')->latest()->get();
+        } else {
+            $posts = Post::query()
+                ->where('title', 'like', "%$query%")
+                ->orWhere('content', 'like', "%$query%")
+                ->with('user')->latest()->get();
+        }
+        return view('posts.index', compact('posts'));
+    }
+
     public function delete(Post $post): RedirectResponse
     {
         $post->delete();
