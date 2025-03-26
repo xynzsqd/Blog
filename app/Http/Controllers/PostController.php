@@ -73,12 +73,12 @@ class PostController extends Controller
     {
         $query = $request->input('query');
         if (empty($query)) {
-            $posts = Post::query()->with('user')->latest()->paginate(10);
+            $posts = Post::query()->with('user', 'categories')->latest()->paginate(10);
         } else {
             $posts = Post::query()
                 ->where('title', 'like', "%$query%")
                 ->orWhere('content', 'like', "%$query%")
-                ->with('user')->latest()->paginate(10);
+                ->with('user', 'categories')->latest()->paginate(10);
         }
         return view('posts.index', compact('posts'));
     }
