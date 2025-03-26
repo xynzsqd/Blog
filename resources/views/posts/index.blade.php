@@ -22,6 +22,13 @@
                 <li>
                     <a href="{{ route('profile.show', $post->user->id) }}">author: {{ $post->user->name }}</a>
                     <h3><a href={{ route('posts.show', $post->slug) }}>{{ $post->title }}</a></h3>
+                    @if ($post->categories->isNotEmpty())
+                        <ul>
+                            @foreach ($post->categories as $category)
+                                <li>{{ $category->name }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </li>
             @endforeach
         </ol>

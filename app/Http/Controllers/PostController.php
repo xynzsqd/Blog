@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -11,13 +12,14 @@ class PostController extends Controller
 {
     public function index(): View
     {
-        $posts = Post::with('user')->latest()->get();
+        $posts = Post::with('user', 'categories')->latest()->get();
         return view('posts.index', compact('posts'));
     }
 
     public function create(): View
     {
-        return view('posts.create');
+        $categories = Category::query()->get();
+        return view('posts.create', compact('categories'));
     }
 
     public function show(Post $post): View
@@ -40,12 +42,14 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:100'],
             'content' => ['required', 'string', 'max:10000'],
+            'categories' => ['nullable','array'],
+            'categories.*' => ['exists:categories,id'],
         ]);
-
         $data['user_id'] = auth()->id();
         $data['slug'] = Post::generateUniqueSlug($data['title']);
-        $post = Post::query()->create($data);
 
+        $post = Post::query()->create($data);
+        $post->categories()->sync($data['categories']);
         return redirect()->route('posts.show', $post->slug);
     }
 

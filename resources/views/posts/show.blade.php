@@ -8,6 +8,13 @@
         <span>author: {{ $post->user->name }}</span>
         <h3>{{ $post->title }}</h3>
         <p>{{ $post->content }}</p>
+        @if ($post->categories->isNotEmpty())
+            <ul>
+                @foreach ($post->categories as $category)
+                    <li>{{$category->name}}</li>
+                @endforeach
+            </ul>
+        @endif
     </div>
     <div>
         <form method="POST" action="{{ route('comments.store', $post) }}">
