@@ -33,5 +33,5 @@
             @endforeach
         </ol>
     @endif
-    <div>{{$posts->links()}}</div>
+    <div>{{ $posts->appends(['query' => request('query')])->links() }}</div>
 @endsection

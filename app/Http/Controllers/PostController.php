@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index(): View
     {
         $posts = Post::with('user', 'categories')
-        ->latest()->paginate(10);
+            ->latest()->paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -43,14 +43,16 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:100'],
             'content' => ['required', 'string', 'max:10000'],
-            'categories' => ['nullable','array'],
+            'categories' => ['nullable', 'array'],
             'categories.*' => ['exists:categories,id'],
         ]);
         $data['user_id'] = auth()->id();
         $data['slug'] = Post::generateUniqueSlug($data['title']);
 
         $post = Post::query()->create($data);
-        $post->categories()->sync($data['categories']);
+        if (!empty($data['categoriest'])) {
+            $post->categories()->sync($data['categories']);
+        }
         return redirect()->route('posts.show', $post->slug);
     }
 
@@ -71,12 +73,12 @@ class PostController extends Controller
     {
         $query = $request->input('query');
         if (empty($query)) {
-            $posts = Post::query()->with('user')->latest()->get();
+            $posts = Post::query()->with('user')->latest()->paginate(10);
         } else {
             $posts = Post::query()
                 ->where('title', 'like', "%$query%")
                 ->orWhere('content', 'like', "%$query%")
-                ->with('user')->latest()->get();
+                ->with('user')->latest()->paginate(10);
         }
         return view('posts.index', compact('posts'));
     }
