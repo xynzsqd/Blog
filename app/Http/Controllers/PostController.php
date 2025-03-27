@@ -14,7 +14,33 @@ class PostController extends Controller
     {
         $posts = Post::with('user', 'categories')
             ->latest()->paginate(10);
-        return view('posts.index', compact('posts'));
+        $categories = Category::query()->get();
+
+        return view('posts.index', compact('posts', 'categories'));
+    }
+
+    public function search(Request $request): View
+    {
+        $query = $request->input('query');
+        $categorySlug = $request->input('category');
+
+        $posts = Post::query()->with('user', 'categories');
+
+        if (!empty($query)) {
+            $posts->where('title', 'like', "%$query%")
+                ->orWhere('content', 'like', "%$query%");
+        }
+
+        if (!empty($categorySlug)){
+            $posts->whereHas('categories', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        $posts = $posts->latest()->paginate(10);
+        $categories = Category::query()->get();
+
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     public function create(): View
@@ -67,20 +93,6 @@ class PostController extends Controller
         $post->update($data);
 
         return redirect()->route('posts.show', $post->slug);
-    }
-
-    public function search(Request $request): View
-    {
-        $query = $request->input('query');
-        if (empty($query)) {
-            $posts = Post::query()->with('user', 'categories')->latest()->paginate(10);
-        } else {
-            $posts = Post::query()
-                ->where('title', 'like', "%$query%")
-                ->orWhere('content', 'like', "%$query%")
-                ->with('user', 'categories')->latest()->paginate(10);
-        }
-        return view('posts.index', compact('posts'));
     }
 
     public function delete(Post $post): RedirectResponse

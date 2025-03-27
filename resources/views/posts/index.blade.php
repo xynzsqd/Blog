@@ -11,6 +11,16 @@
             <div>
                 <input name="query" type="text" placeholder="search post">
             </div>
+            <div>
+                <select name="category">
+                    <option value="">All categories</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->slug }}" @selected(request('category') === $category->slug)>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
             <button type="submit">Search</button>
         </form>
     </div>
@@ -33,5 +43,5 @@
             @endforeach
         </ol>
     @endif
-    <div>{{ $posts->appends(['query' => request('query')])->links() }}</div>
+    <div>{{ $posts->appends(request()->query())->links() }}</div>
 @endsection
