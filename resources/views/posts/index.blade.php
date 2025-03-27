@@ -21,6 +21,12 @@
                     @endforeach
                 </select>
             </div>
+            <div>
+                <select name="sort">
+                    <option value="newest" @selected(request('sort') === 'newest')>Newest first</option>
+                    <option value="oldest" @selected(request('sort') === 'oldest')>Oldest first</option>
+                </select>
+            </div>
             <button type="submit">Search</button>
         </form>
     </div>

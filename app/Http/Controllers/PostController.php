@@ -23,6 +23,7 @@ class PostController extends Controller
     {
         $query = $request->input('query');
         $categorySlug = $request->input('category');
+        $sort = $request->input('sort');
 
         $posts = Post::query()->with('user', 'categories');
 
@@ -31,13 +32,19 @@ class PostController extends Controller
                 ->orWhere('content', 'like', "%$query%");
         }
 
-        if (!empty($categorySlug)){
+        if (!empty($categorySlug)) {
             $posts->whereHas('categories', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
         }
 
-        $posts = $posts->latest()->paginate(10);
+        if ($sort === 'newest') {
+            $posts->latest();
+        } else {
+            $posts->oldest();
+        }
+
+        $posts = $posts->paginate(10);
         $categories = Category::query()->get();
 
         return view('posts.index', compact('posts', 'categories'));
